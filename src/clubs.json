@@ -7,6 +7,7 @@
     "vibes": ["professional", "supportive"],
     "collab_needs": ["cohost", "speaker"],
     "contact": "https://www.instagram.com/wicsatuic",
+    "discord": "https://discord.com/invite/PQ8sFEYD5Q",
     "logo_url": "/images/club_images/wics.jpg",
     "banner_url": "/images/club_images/wicsbanner.jpeg",
     "flyers": ["/images/club_images/wicsflyer.png", "/images/club_images/wicsflyer1.png", "/images/club_images/wicsflyer2.png"],
@@ -27,7 +28,8 @@
     "interests": ["technology", "cybersecurity", "women", "computer science", "engineering"],
     "vibes": ["professional", "high-energy"],
     "collab_needs": ["speaker"],
-    "contact": "https://www.instagram.com/wicysatuic"
+    "contact": "https://www.instagram.com/wicysatuic",
+    "discord": "https://discord.com/invite/cG5PQD28fY"
   },
   {
     "id": 3,
