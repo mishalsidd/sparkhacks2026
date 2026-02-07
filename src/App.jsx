@@ -129,7 +129,7 @@ function pickRandomUnique(arr, n) {
 export default function App() {
   const [heartedIds, setHeartedIds] = useLocalStorageState("heartedClubIds", []);
   const [search, setSearch] = useState("");
-  const [discoverMode, setDiscoverMode] = useState("clubs"); // clubs | vendors | requests
+  const [discoverMode, setDiscoverMode] = useState("clubs"); // clubs, vendors, reqs
 
 
   const [activeClub, setActiveClub] = useState(null);
