@@ -9,9 +9,7 @@ import logo from "./assets/loopedinlogo.webp";
 import instagramlogo from "./assets/instagramlogo.webp";
 import discordlogo from "./assets/discordlogo.webp";
 
-/**
- * Simple localStorage hook (so hearts + registered clubs persist across refresh)
- */
+
 function useLocalStorageState(key, initialValue) {
   const [value, setValue] = useState(() => {
     try {
