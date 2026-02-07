@@ -142,10 +142,7 @@ export default function App() {
   const allVendors = vendorsData;
 
   // ✅ Requests state (seed + user-added)
-  const [userRequests, setUserRequests] = useLocalStorageState(
-    "userRequests",
-    []
-  );
+  const [userRequests, setUserRequests] = useLocalStorageState("userRequests", []);
   const allRequests = [...requestsData, ...userRequests];
   const [isRequestOpen, setIsRequestOpen] = useState(false);
 
@@ -239,7 +236,6 @@ export default function App() {
             LoopedIn
           </h1>
 
-          {/* ✅ keep YOUR original description text */}
           <p style={styles.subtitle}>
             📍 Find student organizations and campus resources that match your
             interests, all in one place.
@@ -450,7 +446,10 @@ export default function App() {
       ) : null}
 
       {activeVendor ? (
-        <FullScreenVendorModal vendor={activeVendor} onClose={() => setActiveVendor(null)} />
+        <FullScreenVendorModal
+          vendor={activeVendor}
+          onClose={() => setActiveVendor(null)}
+        />
       ) : null}
 
       <footer style={styles.footer}>
@@ -463,23 +462,42 @@ export default function App() {
 }
 
 function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
+  const clubLogo = club.logo_url;
+
   return (
     <article style={styles.card}>
       <div style={styles.cardTop}>
-        <div style={{ flex: 1 }}>
-          <div style={styles.cardTitleRow}>
-            <button
-              type="button"
-              onClick={onOpenProfile}
-              style={styles.cardTitleButton}
-              title="Open club profile"
-            >
-              {club.name}
-            </button>
+        {/* LEFT: logo + text */}
+        <div style={{ display: "flex", gap: 12, alignItems: "flex-start", flex: 1 }}>
+          {clubLogo ? (
+            <img
+              src={clubLogo}
+              alt={`${club.name} logo`}
+              style={styles.tileLogo}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          ) : (
+            <div style={styles.tileLogoFallback}>No logo</div>
+          )}
+
+          <div style={{ flex: 1 }}>
+            <div style={styles.cardTitleRow}>
+              <button
+                type="button"
+                onClick={onOpenProfile}
+                style={styles.cardTitleButton}
+                title="Open club profile"
+              >
+                {club.name}
+              </button>
+            </div>
+            <p style={styles.cardDesc}>{club.description}</p>
           </div>
-          <p style={styles.cardDesc}>{club.description}</p>
         </div>
 
+        {/* RIGHT: heart */}
         <button
           onClick={() => onToggleHeart(club.id)}
           style={{
@@ -499,7 +517,7 @@ function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
         <TagRow label="Collab" items={club.collab_needs} />
       </div>
 
-      {/* ✅ icon contact buttons (wired correctly) */}
+      {/* ✅ icon contact buttons (IG + Discord) */}
       {club.contact || club.discord ? (
         <div style={styles.iconLinksRow}>
           {club.contact ? (
@@ -522,18 +540,39 @@ function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
 }
 
 function VendorTile({ vendor, onOpenProfile }) {
+  const vendorLogo = vendor.logo_url;
+
   return (
     <article style={styles.card}>
-      <button
-        type="button"
-        onClick={onOpenProfile}
-        style={styles.cardTitleButton}
-        title="Open vendor profile"
-      >
-        {vendor.name}
-      </button>
+      <div style={styles.cardTop}>
+        {/* LEFT: logo + text */}
+        <div style={{ display: "flex", gap: 12, alignItems: "flex-start", flex: 1 }}>
+          {vendorLogo ? (
+            <img
+              src={vendorLogo}
+              alt={`${vendor.name} logo`}
+              style={styles.tileLogo}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          ) : (
+            <div style={styles.tileLogoFallback}>No logo</div>
+          )}
 
-      <p style={styles.cardDesc}>{vendor.description}</p>
+          <div style={{ flex: 1 }}>
+            <button
+              type="button"
+              onClick={onOpenProfile}
+              style={styles.cardTitleButton}
+              title="Open vendor profile"
+            >
+              {vendor.name}
+            </button>
+            <p style={styles.cardDesc}>{vendor.description}</p>
+          </div>
+        </div>
+      </div>
 
       <div style={styles.tagsArea}>
         <TagRow label="Services" items={vendor.services} />
@@ -1104,7 +1143,13 @@ function FullScreenClubModal({ club, onClose }) {
             {flyers.length ? (
               <div style={styles.mediaGrid}>
                 {flyers.map((url) => (
-                  <a key={url} href={url} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
                     <img src={url} alt="Flyer" style={styles.mediaImg} />
                   </a>
                 ))}
@@ -1119,7 +1164,13 @@ function FullScreenClubModal({ club, onClose }) {
             {photos.length ? (
               <div style={styles.mediaGrid}>
                 {photos.map((url) => (
-                  <a key={url} href={url} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
                     <img src={url} alt="Club" style={styles.mediaImg} />
                   </a>
                 ))}
@@ -1222,7 +1273,13 @@ function FullScreenVendorModal({ vendor, onClose }) {
               <h3 style={styles.fullH3}>Photos</h3>
               <div style={styles.mediaGrid}>
                 {photos.map((url) => (
-                  <a key={url} href={url} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                  <a
+                    key={url}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ textDecoration: "none" }}
+                  >
                     <img src={url} alt="Vendor" style={styles.mediaImg} />
                   </a>
                 ))}
@@ -1256,7 +1313,13 @@ const styles = {
     color: "#111827",
     fontFamily:
       "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-    background: "#ffffff",
+
+    // ✅ background image from /public/images
+    backgroundImage: 'url("/images/background2.png")',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
   },
 
   header: {
@@ -1275,9 +1338,11 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: 10,
+    fontFamily: '"Courgette", cursive',
+    color: "white",
   },
   brandLogo: { height: 60, width: "auto" },
-  subtitle: { margin: "8px 0 0 0", color: "#3d8cfb" },
+  subtitle: { margin: "8px 0 0 0", color: "#ffffff" },
 
   topActions: {
     display: "flex",
@@ -1433,10 +1498,43 @@ const styles = {
     textDecoration: "none",
     wordBreak: "break-word",
   },
-  noLink: { display: "inline-block", marginTop: 12, color: "#999", fontSize: 12 },
+  noLink: {
+    display: "inline-block",
+    marginTop: 12,
+    color: "#999",
+    fontSize: 12,
+  },
+
+  // ✅ tile logos
+  tileLogo: {
+    width: 44,
+    height: 44,
+    objectFit: "cover",
+    borderRadius: 12,
+    border: "1px solid #eee",
+    background: "#fff",
+    flexShrink: 0,
+  },
+  tileLogoFallback: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    border: "1px solid #eee",
+    background: "#fafafa",
+    color: "#777",
+    fontSize: 11,
+    display: "grid",
+    placeItems: "center",
+    flexShrink: 0,
+  },
 
   // ✅ icon-link styles
-  iconLinksRow: { display: "flex", gap: 10, marginTop: 12, alignItems: "center" },
+  iconLinksRow: {
+    display: "flex",
+    gap: 10,
+    marginTop: 12,
+    alignItems: "center",
+  },
   iconLinkImg: { height: 20, width: "auto", cursor: "pointer" },
 
   overlay: {
