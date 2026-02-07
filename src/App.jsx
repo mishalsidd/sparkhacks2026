@@ -4,7 +4,7 @@ import clubsData from "./clubs.json";
 import vendorsData from "./vendors.json";
 import requestsData from "./requests.json";
 
-// ✅ branding assets (put these files in /src/assets/)
+
 import logo from "./assets/loopedinlogo.webp";
 import instagramlogo from "./assets/instagramlogo.webp";
 import discordlogo from "./assets/discordlogo.webp";
@@ -46,7 +46,7 @@ function matchesQueryClub(club, q) {
     ...(club.vibes || []),
     ...(club.collab_needs || []),
 
-    // ✅ extra profile fields (optional)
+    
     club.mission,
     club.location,
     club.meeting_time,
@@ -133,7 +133,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [discoverMode, setDiscoverMode] = useState("clubs"); // clubs | vendors | requests
 
-  // ✅ Full-screen profile modal state
+
   const [activeClub, setActiveClub] = useState(null);
   const [activeVendor, setActiveVendor] = useState(null);
 
@@ -141,7 +141,7 @@ export default function App() {
   const allClubs = [...clubsData, ...userClubs];
   const allVendors = vendorsData;
 
-  // ✅ Requests state (seed + user-added)
+ 
   const [userRequests, setUserRequests] = useLocalStorageState("userRequests", []);
   const allRequests = [...requestsData, ...userRequests];
   const [isRequestOpen, setIsRequestOpen] = useState(false);
@@ -230,7 +230,7 @@ export default function App() {
     <div style={styles.page}>
       <header style={styles.header}>
         <div>
-          {/* ✅ branding header */}
+          {/* header */}
           <h1 style={styles.brandTitle}>
             <img src={logo} alt="LoopedIn logo" style={styles.brandLogo} />
             LoopedIn
@@ -296,7 +296,7 @@ export default function App() {
             <span style={styles.countPill}>{discoverItems.length}</span>
           </div>
 
-          {/* mode toggle */}
+          {/* mode */}
           <div style={styles.modeToggle}>
             {["clubs", "vendors", "requests"].map((m) => {
               const active = discoverMode === m;
@@ -321,7 +321,7 @@ export default function App() {
             })}
           </div>
 
-          {/* post request button */}
+          {/*  request button */}
           {discoverMode === "requests" ? (
             <div style={{ marginTop: 10 }}>
               <button style={styles.smallBtn} onClick={() => setIsRequestOpen(true)}>
@@ -467,7 +467,7 @@ function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
   return (
     <article style={styles.card}>
       <div style={styles.cardTop}>
-        {/* LEFT: logo + text */}
+        {/* L*/}
         <div style={{ display: "flex", gap: 12, alignItems: "flex-start", flex: 1 }}>
           {clubLogo ? (
             <img
@@ -497,7 +497,7 @@ function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
           </div>
         </div>
 
-        {/* RIGHT: heart */}
+        {/* R*/}
         <button
           onClick={() => onToggleHeart(club.id)}
           style={{
@@ -517,7 +517,7 @@ function ClubTile({ club, hearted, onToggleHeart, onOpenProfile }) {
         <TagRow label="Collab" items={club.collab_needs} />
       </div>
 
-      {/* ✅ icon contact buttons (IG + Discord) */}
+      {/* contacts */}
       {club.contact || club.discord ? (
         <div style={styles.iconLinksRow}>
           {club.contact ? (
@@ -545,7 +545,7 @@ function VendorTile({ vendor, onOpenProfile }) {
   return (
     <article style={styles.card}>
       <div style={styles.cardTop}>
-        {/* LEFT: logo + text */}
+        {/* L  */}
         <div style={{ display: "flex", gap: 12, alignItems: "flex-start", flex: 1 }}>
           {vendorLogo ? (
             <img
@@ -643,7 +643,7 @@ function TagRow({ label, items }) {
   );
 }
 
-/** Simple modal overlay */
+
 function Modal({ children, onClose }) {
   return (
     <div style={styles.overlay} onMouseDown={onClose}>
@@ -663,7 +663,7 @@ function NewClubForm({ existingIds, onAddClub, onCancel }) {
   const [contact, setContact] = useState("");
   const [discord, setDiscord] = useState("");
 
-  // ✅ extra profile fields
+  
   const [mission, setMission] = useState("");
   const [location, setLocation] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
@@ -870,18 +870,15 @@ function parseUpcomingEvents(text) {
   const raw = (text ?? "").trim();
   if (!raw) return [];
 
-  // If it's JSON, try parse
   if (raw.startsWith("[") || raw.startsWith("{")) {
     try {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) return parsed;
       return [parsed];
     } catch {
-      // fall through to line parser
     }
   }
 
-  // Line format: Title | 2026-03-10 | 6pm | Location | https://...
   const lines = raw
     .split("\n")
     .map((l) => l.trim())
@@ -1015,7 +1012,6 @@ function NewRequestForm({ existingIds, onAddRequest, onCancel }) {
   );
 }
 
-/** ✅ Full-screen club profile modal (banner + events + flyers + photos) */
 function FullScreenClubModal({ club, onClose }) {
   useEffect(() => {
     function onKeyDown(e) {
@@ -1204,7 +1200,6 @@ function FullScreenClubModal({ club, onClose }) {
   );
 }
 
-/** ✅ Full-screen vendor profile modal */
 function FullScreenVendorModal({ vendor, onClose }) {
   useEffect(() => {
     function onKeyDown(e) {
@@ -1314,7 +1309,6 @@ const styles = {
     fontFamily:
       "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
 
-    // ✅ background image from /public/images
     backgroundImage: 'url("/images/background2.png")',
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -1331,7 +1325,7 @@ const styles = {
     marginBottom: 10,
   },
 
-  // ✅ branding
+
   brandTitle: {
     margin: 0,
     fontSize: 32,
@@ -1505,7 +1499,6 @@ const styles = {
     fontSize: 12,
   },
 
-  // ✅ tile logos
   tileLogo: {
     width: 44,
     height: 44,
@@ -1528,7 +1521,6 @@ const styles = {
     flexShrink: 0,
   },
 
-  // ✅ icon-link styles
   iconLinksRow: {
     display: "flex",
     gap: 10,
